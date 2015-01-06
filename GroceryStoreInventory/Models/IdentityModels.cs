@@ -18,6 +18,13 @@ namespace GroceryStoreInventory.Models
         }
     }
 
+    public class ApplicationUserStore : UserStore<ApplicationUser>
+    {
+        public ApplicationUserStore(ApplicationDbContext context)
+            : base(context)
+        { }
+    }
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

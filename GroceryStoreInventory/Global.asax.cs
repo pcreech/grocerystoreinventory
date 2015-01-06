@@ -11,7 +11,7 @@ using System.Web.Optimization;
 
 namespace GroceryStoreInventory
 {
-    public class Global : HttpApplication
+    public class MvcApplication : HttpApplication
     {
         void Application_Start(object sender, EventArgs e)
         {
