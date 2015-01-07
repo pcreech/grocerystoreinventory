@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace GroceryStoreInventory.Controllers
 {
+    [Authorize(Roles = "user")]
     public class HomeController : Controller
     {
         // GET: Home

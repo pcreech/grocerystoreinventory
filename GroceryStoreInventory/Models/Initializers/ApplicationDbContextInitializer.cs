@@ -8,30 +8,53 @@ using System.Web;
 
 namespace GroceryStoreInventory.Models.Initializers
 {
-    public class ApplicationDbContextInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
+    public class ApplicationDbContextInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
+        void EnsureRole(RoleManager<IdentityRole> RoleManager, string role)
+        {
+            if (!RoleManager.RoleExists(role))
+            {
+                RoleManager.Create(new IdentityRole(role));
+            }
+        }
+
+        void EnsureUser(UserManager<ApplicationUser> UserManager, string userName, string password, IEnumerable<string> roles)
+        {
+            ApplicationUser user = UserManager.FindByName(userName);
+            if (user == null)
+            {
+                user = new ApplicationUser();
+                user.UserName = userName;
+                UserManager.Create(user, password);
+            }
+            foreach(var role in roles)
+            {
+                if(!UserManager.IsInRole(user.Id, role))
+                {
+                    UserManager.AddToRole(user.Id, role);
+                }
+            }
+        }
+        
         protected override void Seed(ApplicationDbContext context)
         {
             base.Seed(context);
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-            string name = "Admin";
-            string password = "@abcd1234";
-            string adminRole = "admin";
+            string adminUsername = "owner";
+            string adminpassword = "@abcd1234";
+            string adminRole = "admin"; //Admin Role
 
-            if(!RoleManager.RoleExists(adminRole))
-            {
-                RoleManager.Create(new IdentityRole(adminRole));
-            }
+            string employeeUsername = "employee";
+            string employeePassword = "@1234abcd";
+            string baseRole = "user";  //Employee/Base role
 
-            var user = new ApplicationUser();
-            user.UserName = name;
-            var adminresult = UserManager.Create(user, password);
-            if(adminresult.Succeeded)
-            {
-                UserManager.AddToRole(user.Id, adminRole);
-            }
+            EnsureRole(RoleManager, adminRole);
+            EnsureRole(RoleManager, baseRole);
+            EnsureUser(UserManager, adminUsername, adminpassword, new string[] { adminRole, baseRole });
+            EnsureUser(UserManager, employeeUsername, employeePassword, new string[] { baseRole });
+           
         }
     }
 }
