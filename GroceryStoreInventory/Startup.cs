@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using GroceryStoreInventory.Models;
+using GroceryStoreInventory.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -19,6 +20,8 @@ namespace GroceryStoreInventory
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StoreContext>().AsSelf().InstancePerRequest();
+            builder.RegisterType<StoreItemService>().AsSelf().InstancePerRequest();
             builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerLifetimeScope();
             builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerLifetimeScope();

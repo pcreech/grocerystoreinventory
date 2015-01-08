@@ -8,7 +8,7 @@ using System.Web;
 
 namespace GroceryStoreInventory.Models.Initializers
 {
-    public class ApplicationDbContextInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+    public class ApplicationDbContextInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         void EnsureRole(RoleManager<IdentityRole> RoleManager, string role)
         {
