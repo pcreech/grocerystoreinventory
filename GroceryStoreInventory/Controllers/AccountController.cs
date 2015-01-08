@@ -81,7 +81,7 @@ namespace GroceryStoreInventory.Controllers
         public ActionResult LogOff()
         {
             authenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "StoreItems");
         }
 
         #region Helpers
@@ -94,7 +94,7 @@ namespace GroceryStoreInventory.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "StoreItems");
         }
 
         #endregion

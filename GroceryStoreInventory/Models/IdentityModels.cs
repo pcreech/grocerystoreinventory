@@ -33,9 +33,5 @@ namespace GroceryStoreInventory.Models
             Database.SetInitializer<ApplicationDbContext>(new Initializers.ApplicationDbContextInitializer());
         }
 
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
     }
 }
