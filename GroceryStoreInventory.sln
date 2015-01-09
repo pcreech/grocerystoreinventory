@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryStoreInventory", "GroceryStoreInventory\GroceryStoreInventory.csproj", "{9A97DE2E-449C-4332-AA84-D26717888B3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryStoreInventory.Tests", "GroceryStoreInventory.Tests\GroceryStoreInventory.Tests.csproj", "{C45D4ADC-B9DC-482F-9B5E-F7742B947196}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{9A97DE2E-449C-4332-AA84-D26717888B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A97DE2E-449C-4332-AA84-D26717888B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A97DE2E-449C-4332-AA84-D26717888B3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C45D4ADC-B9DC-482F-9B5E-F7742B947196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C45D4ADC-B9DC-482F-9B5E-F7742B947196}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C45D4ADC-B9DC-482F-9B5E-F7742B947196}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C45D4ADC-B9DC-482F-9B5E-F7742B947196}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

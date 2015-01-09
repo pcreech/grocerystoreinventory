@@ -44,15 +44,15 @@ namespace GroceryStoreInventory.Models.Initializers
 
             string adminUsername = "owner";
             string adminpassword = "@abcd1234";
-            string adminRole = "admin"; //Admin Role
+            string adminRole = "Owner"; //Admin Role
 
             string employeeUsername = "employee";
             string employeePassword = "@1234abcd";
-            string baseRole = "user";  //Employee/Base role
+            string baseRole = "Employee";  //Employee/Base role
 
             EnsureRole(RoleManager, adminRole);
             EnsureRole(RoleManager, baseRole);
-            EnsureUser(UserManager, adminUsername, adminpassword, new string[] { adminRole, baseRole });
+            EnsureUser(UserManager, adminUsername, adminpassword, new string[] { adminRole });
             EnsureUser(UserManager, employeeUsername, employeePassword, new string[] { baseRole });
            
         }

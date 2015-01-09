@@ -14,5 +14,7 @@ namespace GroceryStoreInventory.Models
         public string Sku { get; set; }
         public string Brand { get; set; }
         public int Quantity { get; set; }
+
+        public virtual List<ReceivingItem> ReceivingItems { get; set; }
     }
 }
