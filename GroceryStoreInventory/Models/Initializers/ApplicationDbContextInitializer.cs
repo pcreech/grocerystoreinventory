@@ -42,7 +42,7 @@ namespace GroceryStoreInventory.Models.Initializers
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-            string adminUsername = "owner";
+            string adminUsername = "billy";
             string adminpassword = "@abcd1234";
             string adminRole = "Owner"; //Admin Role
 
