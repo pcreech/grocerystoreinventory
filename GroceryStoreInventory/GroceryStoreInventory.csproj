@@ -193,6 +193,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\ReceivingItemsController.cs" />
     <Compile Include="Controllers\StoreItemsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -200,14 +202,19 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Initializers\ApplicationDbContextInitializer.cs" />
+    <Compile Include="Models\Mappings\ReceivingItemMap.cs" />
     <Compile Include="Models\Mappings\StoreItemMap.cs" />
+    <Compile Include="Models\ReceivingItem.cs" />
     <Compile Include="Models\StoreContext.cs" />
     <Compile Include="Models\StoreItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Services\CrudService.cs" />
+    <Compile Include="Services\ReceivingItemService.cs" />
     <Compile Include="Services\StoreItemService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ReceivingItems\ReceivingItemViewModel.cs" />
     <Compile Include="ViewModels\StoreItems\IndexViewModel.cs" />
     <Compile Include="ViewModels\StoreItems\StoreItemViewModel.cs" />
   </ItemGroup>
@@ -223,6 +230,11 @@
     <Content Include="Views\StoreItems\Details.cshtml" />
     <Content Include="Views\StoreItems\Edit.cshtml" />
     <Content Include="Views\StoreItems\Index.cshtml" />
+    <Content Include="Views\ReceivingItems\Create.cshtml" />
+    <Content Include="Views\ReceivingItems\Delete.cshtml" />
+    <Content Include="Views\ReceivingItems\Details.cshtml" />
+    <Content Include="Views\ReceivingItems\Edit.cshtml" />
+    <Content Include="Views\ReceivingItems\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

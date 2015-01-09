@@ -10,10 +10,12 @@ using GroceryStoreInventory.Models;
 using GroceryStoreInventory.Services;
 using GroceryStoreInventory.ViewModels.StoreItems;
 using AutoMapper;
+using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace GroceryStoreInventory.Controllers
 {
-    [Authorize(Roles="user")]
+    [Authorize(Roles="Owner,Employee")]
     public class StoreItemsController : Controller
     {
         private StoreItemService service;
@@ -22,14 +24,20 @@ namespace GroceryStoreInventory.Controllers
         {
             this.service = service;
             Mapper.CreateMap<StoreItem, StoreItemViewModel>();
-            Mapper.CreateMap<StoreItem, IndexViewModel>();
+            Mapper.CreateMap<StoreItem, IndexViewModel>()
+                .ForMember(
+                    dest => dest.LastReceived, 
+                    opt => opt.MapFrom(src => src.ReceivingItems.Any() ? 
+                                                (DateTime?)src.ReceivingItems.Max(item => item.DateReceived) : 
+                                                null));
             Mapper.CreateMap<StoreItemViewModel, StoreItem>();
         }
 
         // GET: StoreItems
         public ActionResult Index()
         {
-            return View(Mapper.Map<IEnumerable<IndexViewModel>>(service.GetItems()));
+            var items = Mapper.Map<IEnumerable<IndexViewModel>>(service.GetItems());
+            return View(items.OrderByDescending(p => p.LastReceived));
         }
 
         // GET: StoreItems/Details/5
@@ -62,8 +70,16 @@ namespace GroceryStoreInventory.Controllers
         {
             if (ModelState.IsValid)
             {
-                service.AddItem(Mapper.Map<StoreItem>(storeItem));
-                return RedirectToAction("Index");
+                try
+                {
+                    service.AddItem(Mapper.Map<StoreItem>(storeItem));
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (!checkSku(ex)) throw ex;
+                }
+            
             }
 
             return View(storeItem);
@@ -93,14 +109,21 @@ namespace GroceryStoreInventory.Controllers
         {
             if (ModelState.IsValid)
             {
-                service.EditItem(Mapper.Map<StoreItem>(storeItem));
-                return RedirectToAction("Index");
+                try
+                {
+                    service.EditItem(Mapper.Map<StoreItem>(storeItem));
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (!checkSku(ex)) throw ex;
+                }
             }
             return View(storeItem);
         }
 
         // GET: StoreItems/Delete/5
-        [Authorize(Roles="admin")]
+        [Authorize(Roles="Owner")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -118,11 +141,26 @@ namespace GroceryStoreInventory.Controllers
         // POST: StoreItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="admin")]
+        [Authorize(Roles="Owner")]
         public ActionResult DeleteConfirmed(int id)
         {
             service.DeleteById(id);
             return RedirectToAction("Index");
+        }
+
+        bool checkSku(DbUpdateException ex)
+        {
+            // Not the most elegant, but it works.
+            if (ex.InnerException != null && ex.InnerException.InnerException != null)
+            {
+                string message = ex.InnerException.InnerException.Message;
+                if (message.StartsWith("Cannot insert duplicate key row in object 'dbo.StoreItems' with unique index 'IX_Sku'"))
+                {
+                    ModelState.AddModelError("Sku", "Sku already exists");
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
