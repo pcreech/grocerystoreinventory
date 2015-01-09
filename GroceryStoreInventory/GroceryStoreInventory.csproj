@@ -55,6 +55,12 @@
     <Reference Include="Autofac.Integration.Owin">
       <HintPath>..\packages\Autofac.Owin.3.1.0\lib\net45\Autofac.Integration.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi.Owin">
+      <HintPath>..\packages\Autofac.WebApi2.Owin.3.2.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.dll</HintPath>
@@ -214,8 +220,10 @@
     <Compile Include="Services\StoreItemService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ReceivingItems\ReceivingApiViewModel.cs" />
     <Compile Include="ViewModels\ReceivingItems\ReceivingItemViewModel.cs" />
     <Compile Include="ViewModels\StoreItems\IndexViewModel.cs" />
+    <Compile Include="ViewModels\StoreItems\StoreApiViewModel.cs" />
     <Compile Include="ViewModels\StoreItems\StoreItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

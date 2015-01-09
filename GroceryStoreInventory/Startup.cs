@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
+using Autofac.Integration.WebApi.Owin;
 using GroceryStoreInventory.Models;
 using GroceryStoreInventory.Services;
 using Microsoft.AspNet.Identity;
@@ -9,6 +11,7 @@ using Microsoft.Owin.Security;
 using Owin;
 using System.Reflection;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 [assembly: OwinStartupAttribute(typeof(GroceryStoreInventory.Startup))]
@@ -19,7 +22,7 @@ namespace GroceryStoreInventory
         public void Configuration(IAppBuilder app)
         {
             var builder = new ContainerBuilder();
-
+            var config = new HttpConfiguration();
             // Identity Dependencies
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerLifetimeScope();
@@ -38,13 +41,17 @@ namespace GroceryStoreInventory
             builder.RegisterControllers(typeof(MvcApplication).Assembly); 
 
             //Autofac WebAPI2 Boilerplate
-            //builder.RegisterApiControllers(typeof(MvcApplication).Assembly); 
+            builder.RegisterApiControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterWebApiFilterProvider(config);
 
             var container = builder.Build();
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
             app.UseAutofacMiddleware(container);
             app.UseAutofacMvc();
+            app.UseAutofacWebApi(config);
             ConfigureAuth(app);
         }
     }
